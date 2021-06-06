@@ -1,5 +1,4 @@
-import 'package:cloud_firestore_platform_interface/cloud_firestore_platform_interface.dart'
-    show Timestamp;
+import 'package:cloud_firestore_platform_interface/cloud_firestore_platform_interface.dart';
 import 'package:sembast_cloud_firestore_type_adapters/src/mixin.dart';
 
 // ignore: implementation_imports
@@ -25,8 +24,8 @@ class _FirestoreDateTimeAdapter
   String get name => 'FirestoreDateTime';
 }
 
-/// Firestore timestamp adapter.
+/// Firestore DateTime adapter.
 ///
-/// Convert a timestamp to a map with seconds and nanoseconds information.
+/// Convert a DateTime to a map with microseconds and nanoseconds information.
 final SembastTypeAdapter<DateTime, Map<String, int>>
     sembastFirestoreDateTimeAdapter = _FirestoreDateTimeAdapter();
