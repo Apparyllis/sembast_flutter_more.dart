@@ -4,20 +4,15 @@ import 'package:sembast_cloud_firestore_type_adapters/src/mixin.dart';
 // ignore: implementation_imports
 import 'package:sembast/src/type_adapter_impl.dart';
 
-class _FirestoreDateTimeAdapter
-    extends SembastTypeAdapter<DateTime, Map<String, dynamic>>
-    with TypeAdapterCodecMixin<DateTime, Map<String, dynamic>> {
+class _FirestoreDateTimeAdapter extends SembastTypeAdapter<DateTime, int>
+    with TypeAdapterCodecMixin<DateTime, int> {
   _FirestoreDateTimeAdapter() {
     // Encode to map
-    encoder = TypeAdapterConverter<DateTime, Map<String, dynamic>>(
-        (dateTime) => <String, dynamic>{
-              'microseconds':
-                  Timestamp.fromDate(dateTime).microsecondsSinceEpoch,
-              'nanoseconds': Timestamp.fromDate(dateTime).nanoseconds
-            });
+    encoder = TypeAdapterConverter<DateTime, int>(
+        (dateTime) => Timestamp.fromDate(dateTime).microsecondsSinceEpoch);
     // Decode from map
-    decoder = TypeAdapterConverter<Map<String, dynamic>, DateTime>((map) =>
-        DateTime.fromMicrosecondsSinceEpoch(map['microseconds'] as int));
+    decoder = TypeAdapterConverter<int, DateTime>(
+        (value) => DateTime.fromMicrosecondsSinceEpoch(value));
   }
 
   @override
@@ -27,5 +22,5 @@ class _FirestoreDateTimeAdapter
 /// Firestore DateTime adapter.
 ///
 /// Convert a DateTime to a map with microseconds and nanoseconds information.
-final SembastTypeAdapter<DateTime, Map<String, dynamic>>
-    sembastFirestoreDateTimeAdapter = _FirestoreDateTimeAdapter();
+final SembastTypeAdapter<DateTime, int> sembastFirestoreDateTimeAdapter =
+    _FirestoreDateTimeAdapter();
