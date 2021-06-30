@@ -9,15 +9,19 @@ class _FirestoreDateTimeAdapter
     with TypeAdapterCodecMixin<DateTime, Map<String, dynamic>> {
   _FirestoreDateTimeAdapter() {
     // Encode to map
-    encoder = TypeAdapterConverter<DateTime, Map<String, dynamic>>(
-        (dateTime) => <String, dynamic>{
-              'microseconds':
-                  Timestamp.fromDate(dateTime).microsecondsSinceEpoch ?? 0,
-              'nanoseconds': Timestamp.fromDate(dateTime).nanoseconds ?? 0
-            });
+    encoder = TypeAdapterConverter<DateTime, Map<String, dynamic>>((dateTime) {
+      if (dateTime != null) {
+        return {
+          'microseconds': Timestamp.fromDate(dateTime).microsecondsSinceEpoch
+        };
+      }
+
+      return {'microseconds': 0};
+    });
     // Decode from map
     decoder = TypeAdapterConverter<Map<String, dynamic>, DateTime>((map) =>
-        DateTime.fromMicrosecondsSinceEpoch(map['microseconds'] as int));
+        DateTime.fromMicrosecondsSinceEpoch(map['microseconds'] as int,
+            isUtc: true));
   }
 
   @override
