@@ -12,8 +12,8 @@ class _FirestoreDateTimeAdapter
     encoder = TypeAdapterConverter<DateTime, Map<String, dynamic>>(
         (dateTime) => <String, dynamic>{
               'microseconds':
-                  Timestamp.fromDate(dateTime).microsecondsSinceEpoch,
-              'nanoseconds': Timestamp.fromDate(dateTime).nanoseconds
+                  Timestamp.fromDate(dateTime).microsecondsSinceEpoch ?? 0,
+              'nanoseconds': Timestamp.fromDate(dateTime).nanoseconds ?? 0
             });
     // Decode from map
     decoder = TypeAdapterConverter<Map<String, dynamic>, DateTime>((map) =>
